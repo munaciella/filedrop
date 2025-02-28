@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <ClerkProvider
       appearance={{
-        baseTheme: dark, // ✅ Dynamically apply dark or light mode
+        baseTheme: dark,
       }}
     >
       <html lang="en" suppressHydrationWarning>
