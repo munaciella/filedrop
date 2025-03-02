@@ -1,7 +1,11 @@
-const DashboardPage = () => {
+import Dropzone from "@/components/Dropzone"
+import { auth } from "@clerk/nextjs/server" 
+
+const DashboardPage = async () => {
+  const { userId } = await auth()
   return (
     <div>
-      <h1 className="text-red-600">Dashboard</h1>
+      <Dropzone />
     </div>
   )
 }
