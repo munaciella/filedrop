@@ -1,187 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-// "use client";
-
-// import { useUser } from "@clerk/nextjs";
-// import { FileType } from "../../../typings";
-// import { Button } from "../ui/button";
-// import { columns } from "./columns";
-// import { DataTable } from "./Table";
-// import { useEffect, useState } from "react";
-// import { collection, orderBy, query } from "firebase/firestore";
-// import { useCollection } from "react-firebase-hooks/firestore";
-// import { db } from "../../../firebase";
-// import { Skeleton } from "@/components/ui/skeleton";
-
-// const TableWrapper = ({ skeletonFiles }: { skeletonFiles: FileType[] }) => {
-//   const { user } = useUser();
-//   const [initialFiles, setInitialFiles] = useState<FileType[]>([]);
-//   const [sort, setSort] = useState<"asc" | "desc">("desc");
-
-//   const [docs, loading, error] = useCollection(
-//     user &&
-//       query(
-//         collection(db, "users", user.id, "files"),
-//         orderBy("timestamp", sort)
-//       )
-//   );
-
-//   useEffect(() => {
-//     if (!docs) return;
-//     const files: FileType[] = docs.docs.map((doc) => ({
-//       id: doc.id,
-//       fileName: doc.data().fileName,
-//       timestamp: new Date(doc.data().timestamp?.seconds * 1000) || undefined,
-//       fullName: doc.data().fullName,
-//       downloadURL: doc.data().downloadURL,
-//       type: doc.data().type,
-//       size: doc.data().size,
-//     }));
-//     setInitialFiles(files);
-//   }, [docs]);
-
-//   if (docs?.docs.length === undefined) {
-//     return (
-//       <div className="flex flex-col">
-//         <Button variant="outline" className="ml-auto w-36 h-10 mb-5">
-//           <Skeleton className="h-5 w-full" />
-//         </Button>
-
-//         <div className="border rounded-lg">
-//         <div className="border-b h-12" />
-//         {skeletonFiles.map((file) => (
-//           <div
-//             key={file.id}
-//             className="flex items-center space-x-4 p-5 w-full"
-//           >
-//             <Skeleton className="h-12 w-12" />
-//             <Skeleton className="h-12 w-full" />
-//           </div>
-//         ))}
-
-//         {skeletonFiles.length === 0 && (
-//           <div className="flex items-center space-x-4 p-5 w-full">
-//             <Skeleton className="h-12 w-12" />
-//             <Skeleton className="h-12 w-full" />
-//           </div>
-//         )}
-//         </div>
-//       </div>
-//     );
-//   }
-
-//   return (
-//     <div className="flex flex-col space-y-5 pb-10">
-//       <Button
-//         variant="outline"
-//         onClick={() => setSort(sort === "desc" ? "asc" : "desc")}
-//         className="ml-auto w-fit"
-//       >
-//         Sort By {sort === "desc" ? "Newest" : "Oldest"}
-//       </Button>
-
-//       <DataTable columns={columns} data={initialFiles} />
-//     </div>
-//   );
-// };
-
-// export default TableWrapper;
-
-
-
-// "use client";
-
-// import { useUser } from "@clerk/nextjs";
-// import { FileType } from "../../../typings";
-// import { Button } from "../ui/button";
-// import { columns } from "./columns";
-// import { DataTable } from "./Table";
-// import { useEffect, useState } from "react";
-// import { collection, orderBy, query } from "firebase/firestore";
-// import { useCollection } from "react-firebase-hooks/firestore";
-// import { db } from "../../../firebase";
-// import { Skeleton } from "@/components/ui/skeleton";
-
-// const TableWrapper = ({ skeletonFiles }: { skeletonFiles: FileType[] }) => {
-//   const { user } = useUser();
-//   const [initialFiles, setInitialFiles] = useState<FileType[]>([]);
-//   const [sort, setSort] = useState<"asc" | "desc">("desc");
-
-//   const [docs, loading, error] = useCollection(
-//     user &&
-//       query(
-//         collection(db, "users", user.id, "files"),
-//         orderBy("timestamp", sort)
-//       )
-//   );
-
-//   useEffect(() => {
-//     if (!docs) return;
-//     const files: FileType[] = docs.docs.map((doc) => ({
-//       id: doc.id,
-//       fileName: doc.data().fileName,
-//       timestamp: new Date(doc.data().timestamp?.seconds * 1000) || undefined,
-//       fullName: doc.data().fullName,
-//       downloadURL: doc.data().downloadURL,
-//       type: doc.data().type,
-//       size: doc.data().size,
-//     }));
-//     setInitialFiles(files);
-//   }, [docs]);
-
-//   if (docs?.docs.length === undefined) {
-//     return (
-//       <div className="flex flex-col">
-//         <Button variant="outline" className="ml-auto w-36 h-10 mb-5">
-//           <Skeleton className="h-5 w-full" />
-//         </Button>
-
-//         <div className="border rounded-lg p-4">
-//           <div className="border-b h-12 mb-4" />
-//           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-//             {skeletonFiles.map((file) => (
-//               <div
-//                 key={file.id}
-//                 className="flex items-center space-x-4 p-5 w-full"
-//               >
-//                 <Skeleton className="h-12 w-12 rounded-md" />
-//                 <Skeleton className="h-12 w-full" />
-//               </div>
-//             ))}
-
-//             {skeletonFiles.length === 0 && (
-//               <div className="flex items-center space-x-4 p-5 w-full">
-//                 <Skeleton className="h-12 w-12 rounded-md" />
-//                 <Skeleton className="h-12 w-full" />
-//               </div>
-//             )}
-//           </div>
-//         </div>
-//       </div>
-//     );
-//   }
-
-//   return (
-//     <div className="flex flex-col space-y-5 pb-10">
-//       <Button
-//         variant="outline"
-//         onClick={() => setSort(sort === "desc" ? "asc" : "desc")}
-//         className="ml-auto w-fit"
-//       >
-//         Sort By {sort === "desc" ? "Newest" : "Oldest"}
-//       </Button>
-
-//       {/* ✅ Ensures table fits on small screens */}
-//       <div className="w-full max-w-full">
-//         <DataTable columns={columns} data={initialFiles} />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default TableWrapper;
-
-
-
 "use client";
 
 import { useUser } from "@clerk/nextjs";
@@ -190,17 +6,40 @@ import { Button } from "../ui/button";
 import { columns } from "./columns";
 import { DataTable } from "./Table";
 import { useCallback, useEffect, useState } from "react";
-import { collection, doc, orderBy, query, deleteDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  orderBy,
+  query,
+  deleteDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { useCollection } from "react-firebase-hooks/firestore";
 import { db, storage } from "../../../firebase";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ref, deleteObject } from "firebase/storage";
+import { toast } from "sonner";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 
 const TableWrapper = ({ skeletonFiles }: { skeletonFiles: FileType[] }) => {
   const { user } = useUser();
   const [initialFiles, setInitialFiles] = useState<FileType[]>([]);
   const [sort, setSort] = useState<"asc" | "desc">("desc");
 
+  const [selectedFile, setSelectedFile] = useState<FileType | null>(null);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+
+  const [isRenameDialogOpen, setIsRenameDialogOpen] = useState(false);
+  const [newFileName, setNewFileName] = useState("");
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [docs, loading, error] = useCollection(
     user &&
       query(
@@ -209,25 +48,64 @@ const TableWrapper = ({ skeletonFiles }: { skeletonFiles: FileType[] }) => {
       )
   );
 
-  // ✅ Define `handleDeleteFile` inside `useCallback`
-  const handleDeleteFile = useCallback(async (fileId: string, fileUrl: string) => {
-    if (!user) return;
+  const handleDeleteFile = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    async (fileId: string, fileUrl: string) => {
+      if (!user) return;
+
+      const toastId = toast.loading("Deleting file...");
+
+      try {
+        // Delete from Firestore
+        await deleteDoc(doc(db, "users", user.id, "files", fileId));
+
+        // Delete from Firebase Storage
+        const fileRef = ref(storage, `users/${user.id}/files/${fileId}`);
+        await deleteObject(fileRef);
+
+        // Update the state to remove the deleted file
+        setInitialFiles((prevFiles) =>
+          prevFiles.filter((file) => file.id !== fileId)
+        );
+
+        toast.success("File deleted successfully", { id: toastId });
+      } catch (error) {
+        console.error("Error deleting file:", error);
+        toast.error("Error deleting file", { id: toastId });
+      } finally {
+        setIsDeleteDialogOpen(false);
+      }
+    },
+    [user]
+  );
+
+  // ✅ Function to Rename File
+  const handleRenameFile = async () => {
+    if (!user || !selectedFile || !newFileName.trim()) return;
+
+    const toastId = toast.loading("Renaming file...");
 
     try {
-      // 1️⃣ Delete from Firestore
-      await deleteDoc(doc(db, "users", user.id, "files", fileId));
+      const fileRef = doc(db, "users", user.id, "files", selectedFile.id);
 
-      // 2️⃣ Delete from Firebase Storage
-      const fileRef = ref(storage, `users/${user.id}/files/${fileId}`);
-      await deleteObject(fileRef);
+      // Update the file name in Firestore
+      await updateDoc(fileRef, { fileName: newFileName });
 
-      // 3️⃣ Update the state to remove the deleted file
-      setInitialFiles((prevFiles) => prevFiles.filter((file) => file.id !== fileId));
+      // Update UI state
+      setInitialFiles(prevFiles =>
+        prevFiles.map(file =>
+          file.id === selectedFile.id ? { ...file, fileName: newFileName } : file
+        )
+      );
 
+      toast.success("File renamed successfully", { id: toastId });
     } catch (error) {
-      console.error("Error deleting file:", error);
+      console.error("Error renaming file:", error);
+      toast.error("Error renaming file", { id: toastId });
+    } finally {
+      setIsRenameDialogOpen(false);
     }
-  }, [user]);
+  };
 
   useEffect(() => {
     if (!docs) return;
@@ -239,30 +117,10 @@ const TableWrapper = ({ skeletonFiles }: { skeletonFiles: FileType[] }) => {
       downloadURL: doc.data().downloadURL,
       type: doc.data().type,
       size: doc.data().size,
-      onDelete: handleDeleteFile, // Pass the delete function to the column
+      onDelete: handleDeleteFile,
     }));
     setInitialFiles(files);
   }, [docs, handleDeleteFile]);
-
-//   const handleDeleteFile = async (fileId: string, fileUrl: string) => {
-//     if (!user) return;
-
-//     try {
-//       // 1️⃣ Delete from Firestore
-//       await deleteDoc(doc(db, "users", user.id, "files", fileId));
-
-//       // 2️⃣ Delete from Firebase Storage
-//       const fileRef = ref(storage, `users/${user.id}/files/${fileId}`);
-//       await deleteObject(fileRef);
-
-//       // 3️⃣ Update the state to remove the deleted file
-//       setInitialFiles((prevFiles) => prevFiles.filter((file) => file.id !== fileId));
-
-//       console.log(`Deleted file: ${fileId}`);
-//     } catch (error) {
-//       console.error("Error deleting file:", error);
-//     }
-//   };
 
   if (docs?.docs.length === undefined) {
     return (
@@ -274,7 +132,10 @@ const TableWrapper = ({ skeletonFiles }: { skeletonFiles: FileType[] }) => {
         <div className="border rounded-lg">
           <div className="border-b h-12" />
           {skeletonFiles.map((file) => (
-            <div key={file.id} className="flex items-center space-x-4 p-5 w-full">
+            <div
+              key={file.id}
+              className="flex items-center space-x-4 p-5 w-full"
+            >
               <Skeleton className="h-12 w-12" />
               <Skeleton className="h-12 w-full" />
             </div>
@@ -301,9 +162,58 @@ const TableWrapper = ({ skeletonFiles }: { skeletonFiles: FileType[] }) => {
         Sort By {sort === "desc" ? "Newest" : "Oldest"}
       </Button>
 
-      <DataTable columns={columns} data={initialFiles} />
+      <DataTable
+        columns={columns(setSelectedFile, setIsDeleteDialogOpen, setIsRenameDialogOpen)}
+        data={initialFiles}
+      />
+
+      {/* ✅ Delete Confirmation Dialog */}
+      <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Confirm Deletion</DialogTitle>
+          </DialogHeader>
+          <p>
+            Are you sure you want to delete{" "}
+            <strong>{selectedFile?.fileName}</strong>?
+          </p>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={() =>
+                selectedFile &&
+                handleDeleteFile(selectedFile.id, selectedFile.downloadURL)
+              }
+            >
+              Confirm Delete
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* ✅ Rename File Dialog */}
+      <Dialog open={isRenameDialogOpen} onOpenChange={setIsRenameDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Rename File</DialogTitle>
+          </DialogHeader>
+          <p>Current Name: <strong>{selectedFile?.fileName}</strong></p>
+          <Input
+            type="text"
+            placeholder="Enter new file name"
+            value={newFileName}
+            onChange={(e) => setNewFileName(e.target.value)}
+          />
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsRenameDialogOpen(false)}>Cancel</Button>
+            <Button onClick={handleRenameFile}>Confirm Rename</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
-
 export default TableWrapper;

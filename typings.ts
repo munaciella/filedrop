@@ -6,5 +6,5 @@ export type FileType = {
     downloadURL: string;
     type: string;
     size: number;
-    onDelete: (fileId: string, fileUrl: string) => void;
+    onDelete?: (fileId: string, fileUrl: string) => void;
 }

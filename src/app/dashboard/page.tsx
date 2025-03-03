@@ -44,6 +44,7 @@
 
 // export default DashboardPage
 
+
 import Dropzone from "@/components/Dropzone";
 import { auth } from "@clerk/nextjs/server";
 import { collection, getDocs } from "firebase/firestore";
@@ -85,5 +86,4 @@ const DashboardPage = async () => {
     </div>
   );
 };
-
 export default DashboardPage;
