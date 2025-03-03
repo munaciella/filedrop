@@ -2,6 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { SignedOut, SignInButton, UserButton } from "@clerk/nextjs"
 import { ThemeToggle } from "./ThemeToggle"
+import logo from "../../public/FileDrop (3).png"
 
 const Header = () => {
   return (
@@ -9,9 +10,10 @@ const Header = () => {
       <Link href="/" className="flex items-center space-x-2">
         <div className="bg-[#0160FE] w-fit">
           <Image
-            src="https://www.shareicon.net/download/2016/07/13/606936_dropbox_2048x2048.png"
+          src={logo}
+            //src="https://www.shareicon.net/download/2016/07/13/606936_dropbox_2048x2048.png"
             alt="logo"
-            className="invert"
+            className=""
             height={50}
             width={50} 
           />
