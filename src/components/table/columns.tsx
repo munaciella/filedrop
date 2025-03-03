@@ -151,9 +151,13 @@ import prettyBytes from "pretty-bytes";
 import { FileIcon, defaultStyles } from "react-file-icon";
 import { COLOR_EXTENSION_MAP } from "../../../constant";
 import { Button } from "../ui/button";
-import { Trash2 } from "lucide-react";
+import { Pencil, Trash2 } from "lucide-react";
 
-export const columns: ColumnDef<FileType>[] = [
+export const columns = (
+  setSelectedFile: (file: FileType | null) => void,
+  setIsDeleteDialogOpen: (isOpen: boolean) => void,
+  setIsRenameDialogOpen: (isOpen: boolean) => void
+): ColumnDef<FileType>[] => [
   {
     accessorKey: "type",
     header: "Type",
@@ -175,6 +179,25 @@ export const columns: ColumnDef<FileType>[] = [
   {
     accessorKey: "fileName",
     header: "File Name",
+    cell: ({ row }) => {
+      const file = row.original;
+      return (
+        <div className="flex items-center space-x-1">
+          <span>{file.fileName}</span>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="text-gray-500 hover:text-gray-700"
+            onClick={() => {
+              setSelectedFile(file);
+              setIsRenameDialogOpen(true);
+            }}
+          >
+            <Pencil className="h-4 w-4" />
+          </Button>
+        </div>
+      );
+    },
   },
   {
     accessorKey: "timestamp",
@@ -229,7 +252,10 @@ export const columns: ColumnDef<FileType>[] = [
         <Button
           variant="destructive"
           size="icon"
-          onClick={() => file.onDelete(file.id, file.downloadURL)}
+          onClick={() => {
+            setSelectedFile(file); 
+            setIsDeleteDialogOpen(true);
+          }}
         >
           <Trash2 className="h-4 w-4" />
         </Button>

@@ -119,6 +119,7 @@ import { useState } from "react";
 import DropzoneComponent from "react-dropzone";
 import { db, storage } from "../../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { toast } from "sonner";
 
 const Dropzone = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -138,33 +139,91 @@ const Dropzone = () => {
     });
   };
 
+  // const uploadPost = async (selectedFile: File) => {
+  //   if (isLoading) return;
+  //   if (!user) return;
+  //   setIsLoading(true);
+
+  //   const toastId = toast.loading(`Uploading ${selectedFile.name}...`);
+
+  //   try {
+  //   const docRef = await addDoc(collection(db, "users", user.id, "files"), {
+  //     userId: user.id,
+  //     fileName: selectedFile.name,
+  //     fullName: user.fullName,
+  //     profileImg: user.imageUrl,
+  //     timestamp: serverTimestamp(),
+  //     type: selectedFile.type,
+  //     size: selectedFile.size,
+  //   });
+
+  //   const imageRef = ref(storage, `users/${user.id}/files/${docRef.id}`);
+  //   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  //   uploadBytes(imageRef, selectedFile).then(async (snapshot) => {
+  //     const downloadURL = await getDownloadURL(imageRef);
+
+  //     await updateDoc(doc(db, "users", user.id, "files", docRef.id), {
+  //       downloadURL: downloadURL,
+  //     });
+  //     toast.success(`${selectedFile.name} uploaded successfully!`, {
+  //       id: toastId,
+  //     });
+  //   } catch (error) {
+  //     console.error("Error uploading file:", error);
+  //     toast.error(`${selectedFile.name} failed to upload!`, {
+  //       id: toastId,
+  //     });
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // }
+
   const uploadPost = async (selectedFile: File) => {
     if (isLoading) return;
     if (!user) return;
     setIsLoading(true);
-
-    const docRef = await addDoc(collection(db, "users", user.id, "files"), {
-      userId: user.id,
-      fileName: selectedFile.name,
-      fullName: user.fullName,
-      profileImg: user.imageUrl,
-      timestamp: serverTimestamp(),
-      type: selectedFile.type,
-      size: selectedFile.size,
-    });
-
-    const imageRef = ref(storage, `users/${user.id}/files/${docRef.id}`);
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    uploadBytes(imageRef, selectedFile).then(async (snapshot) => {
+  
+    // Show loading toast
+    const toastId = toast.loading(`Uploading ${selectedFile.name}...`);
+  
+    try {
+      // 1️⃣ Add file metadata to Firestore
+      const docRef = await addDoc(collection(db, "users", user.id, "files"), {
+        userId: user.id,
+        fileName: selectedFile.name,
+        fullName: user.fullName,
+        profileImg: user.imageUrl,
+        timestamp: serverTimestamp(),
+        type: selectedFile.type,
+        size: selectedFile.size,
+      });
+  
+      // 2️⃣ Upload file to Firebase Storage
+      const imageRef = ref(storage, `users/${user.id}/files/${docRef.id}`);
+      await uploadBytes(imageRef, selectedFile);
+  
+      // 3️⃣ Get the download URL
       const downloadURL = await getDownloadURL(imageRef);
-
+  
+      // 4️⃣ Update Firestore document with the download URL
       await updateDoc(doc(db, "users", user.id, "files", docRef.id), {
         downloadURL: downloadURL,
       });
-    });
-
-    setIsLoading(false);
+  
+      // ✅ Replace loading toast with success
+      toast.success(`${selectedFile.name} uploaded successfully!`, {
+        id: toastId,
+      });
+    } catch (error) {
+      console.error("Error uploading file:", error);
+  
+      // ❌ Show error toast
+      toast.error(`${selectedFile.name} failed to upload!`, {
+        id: toastId,
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const maxSize = 20971520;
