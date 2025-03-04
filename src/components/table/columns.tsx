@@ -187,7 +187,7 @@ export const columns = (
           <Button
             variant="ghost"
             size="icon"
-            className="text-gray-500 hover:text-gray-700"
+            className="text-gray-500 hover:text-gray-700 cursor-pointer"
             onClick={() => {
               setSelectedFile(file);
               setIsRenameDialogOpen(true);
@@ -252,6 +252,7 @@ export const columns = (
         <Button
           variant="destructive"
           size="icon"
+          className="cursor-pointer"
           onClick={() => {
             setSelectedFile(file); 
             setIsDeleteDialogOpen(true);
