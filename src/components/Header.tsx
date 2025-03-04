@@ -28,8 +28,8 @@ const Header = () => {
 
         <SignedOut>
           <SignInButton 
-            forceRedirectUrl="/dashboard" // ✅ Always redirects to /dashboard after signing in
-            fallbackRedirectUrl="/"       // ✅ If no previous URL exists, redirect to homepage
+            forceRedirectUrl="/dashboard" 
+            fallbackRedirectUrl="/"
             mode="modal" 
           />
         </SignedOut>

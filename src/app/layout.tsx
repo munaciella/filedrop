@@ -5,8 +5,8 @@ import { ClerkProvider } from "@clerk/nextjs";
 import Header from "@/components/Header";
 import { dark } from "@clerk/themes";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import { Toaster } from "@/components/ui/sonner"
-
+import { Toaster } from "@/components/ui/sonner";
+import Footer from "@/components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,22 +35,23 @@ export default function RootLayout({
       }}
     >
       <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <ThemeProvider
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
+        >
+          <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
           >
-        <Header />
-
-        {children}
-        </ThemeProvider>
-            <Toaster position='bottom-right' />
-      </body>
-    </html>
+            <Header />
+            <main className="flex-grow">{children}</main>
+          </ThemeProvider>
+          
+          <Toaster position="bottom-right" />
+          <Footer />
+        </body>
+      </html>
     </ClerkProvider>
   );
 }
