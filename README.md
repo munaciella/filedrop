@@ -110,10 +110,10 @@ NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
 ## 🖼️ Screenshots
 
 ### 📌 **Homepage**
-![Homepage Screenshot](public/Screenshot 2025-03-04 at 14.15.51.png)
+![Homepage Screenshot](./public/Screenshot%202025-03-04%20at%2014.15.51.png)
 
 ### 📌 **Dark Mode**
-![Dark Mode Screenshot](public/Screenshot 2025-03-04 at 14.16.16.png)
+![Dark Mode Screenshot](./public/Screenshot%202025-03-04%20at%2014.16.16.png)
 
 ---
 
