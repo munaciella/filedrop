@@ -1,6 +1,6 @@
 # Filedrop
 
-![Filedrop Banner](public/Screenshot 2025-03-04 at 14.15.51.png)
+![Filedrop Banner](/Screenshot 2025-03-04 at 14.15.51.png)
 
 **Filedrop** is a modern **file storage and management app** built with **Next.js, Firebase, Clerk authentication, and TailwindCSS**. It allows users to upload, rename, delete, and download files securely.
 
