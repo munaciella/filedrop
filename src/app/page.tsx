@@ -3,9 +3,25 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main>
-      <div className="flex flex-col lg:flex-row items-center bg-gray-100 dark:bg-slate-900">
-        {/* Left Section */}
+    <main className="mt-10">
+      <div className="mx-auto max-w-2xl text-center space-y-6 px-6 lg:px-8">
+            <p
+              role="alert"
+              className="inline-block bg-red-100 dark:bg-red-900 px-4 py-2 rounded-md text-red-700 dark:text-red-300 font-medium text-md"
+            >
+              <span className="mr-1">⚠️</span>
+              <strong>Demo Notice:</strong>{" "}
+              <span className="font-light">
+                This live demo is provided solely for testing and development
+                purposes. Functionality may be limited, unstable, or subject to
+                sudden service restrictions. Use at your own risk;
+                production-grade reliability is not guaranteed.
+              </span>
+            </p>
+            </div>
+
+      <div className="flex flex-col lg:flex-row items-center bg-gray-100 dark:bg-slate-900 mt-8">
+{/* Left Section */}
         <div className="p-10 flex flex-col bg-white dark:bg-slate-800 text-gray-900 dark:text-white space-y-5">
           <h1 className="text-4xl md:text-5xl font-bold leading-tight">
             Welcome to Filedrop. <br />

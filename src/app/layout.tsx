@@ -45,7 +45,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <Header />
-            <main className="flex-grow">{children}</main>
+            <main className="flex-grow pb-20">{children}</main>
           </ThemeProvider>
           
           <Toaster position="bottom-right" />
