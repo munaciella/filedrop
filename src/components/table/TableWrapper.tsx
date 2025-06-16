@@ -56,14 +56,11 @@ const TableWrapper = ({ skeletonFiles }: { skeletonFiles: FileType[] }) => {
       const toastId = toast.loading("Deleting file...");
 
       try {
-        // Delete from Firestore
         await deleteDoc(doc(db, "users", user.id, "files", fileId));
 
-        // Delete from Firebase Storage
         const fileRef = ref(storage, `users/${user.id}/files/${fileId}`);
         await deleteObject(fileRef);
 
-        // Update the state to remove the deleted file
         setInitialFiles((prevFiles) =>
           prevFiles.filter((file) => file.id !== fileId)
         );
@@ -79,7 +76,6 @@ const TableWrapper = ({ skeletonFiles }: { skeletonFiles: FileType[] }) => {
     [user]
   );
 
-  // ✅ Function to Rename File
   const handleRenameFile = async () => {
     if (!user || !selectedFile || !newFileName.trim()) return;
 
@@ -88,10 +84,8 @@ const TableWrapper = ({ skeletonFiles }: { skeletonFiles: FileType[] }) => {
     try {
       const fileRef = doc(db, "users", user.id, "files", selectedFile.id);
 
-      // Update the file name in Firestore
       await updateDoc(fileRef, { fileName: newFileName });
 
-      // Update UI state
       setInitialFiles(prevFiles =>
         prevFiles.map(file =>
           file.id === selectedFile.id ? { ...file, fileName: newFileName } : file
@@ -167,7 +161,6 @@ const TableWrapper = ({ skeletonFiles }: { skeletonFiles: FileType[] }) => {
         data={initialFiles}
       />
 
-      {/* ✅ Delete Confirmation Dialog */}
       <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
         <DialogContent>
           <DialogHeader>
@@ -194,7 +187,6 @@ const TableWrapper = ({ skeletonFiles }: { skeletonFiles: FileType[] }) => {
         </DialogContent>
       </Dialog>
 
-      {/* ✅ Rename File Dialog */}
       <Dialog open={isRenameDialogOpen} onOpenChange={setIsRenameDialogOpen}>
         <DialogContent>
           <DialogHeader>
