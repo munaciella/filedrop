@@ -15,7 +15,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { useCollection } from "react-firebase-hooks/firestore";
-import { db, storage } from "../../../firebase";
+import { db, storage } from "../../lib/firebase";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ref, deleteObject } from "firebase/storage";
 import { toast } from "sonner";
