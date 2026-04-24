@@ -1,24 +1,34 @@
 import Dropzone from "@/components/Dropzone";
-import { auth } from "@clerk/nextjs/server";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../../firebase";
-import { FileType } from "../../../typings";
 import TableWrapper from "@/components/table/TableWrapper";
+import { auth } from "@clerk/nextjs/server";
+import { FileType } from "../../../typings";
+import { dbAdmin, Timestamp } from "@/lib/firebase-admin";
 
 const DashboardPage = async () => {
   const { userId } = await auth();
   if (!userId) return null;
 
-  const docsResults = await getDocs(collection(db, "users", userId!, "files"));
-  const skeletonFiles: FileType[] = docsResults.docs.map((doc) => ({
-    id: doc.id,
-    fileName: doc.data().fileName || doc.id,
-    timestamp: new Date(doc.data().timestamp?.seconds * 1000) || undefined,
-    fullName: doc.data().fullName,
-    downloadURL: doc.data().downloadURL,
-    type: doc.data().type,
-    size: doc.data().size,
-  }));
+  const filesSnap = await dbAdmin
+    .collection("users")
+    .doc(userId)
+    .collection("files")
+    .get();
+
+  const skeletonFiles: FileType[] = filesSnap.docs.map((doc) => {
+    const data = doc.data();
+    const rawTs = data.timestamp as Timestamp | undefined;
+    const timestamp: Date = rawTs?.toDate() ?? new Date();
+
+    return {
+      id: doc.id,
+      fileName: data.fileName || doc.id,
+      timestamp,
+      fullName: data.fullName,
+      downloadURL: data.downloadURL,
+      type: data.type,
+      size: data.size,
+    };
+  });
 
   return (
     <div className="p-6 md:p-8 lg:p-10">
@@ -38,4 +48,5 @@ const DashboardPage = async () => {
     </div>
   );
 };
+
 export default DashboardPage;

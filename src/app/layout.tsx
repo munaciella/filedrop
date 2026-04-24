@@ -7,6 +7,7 @@ import { dark } from "@clerk/themes";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Toaster } from "@/components/ui/sonner";
 import Footer from "@/components/Footer";
+import AuthBridge from "@/components/AuthBridge";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,6 +39,7 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
         >
+          <AuthBridge />
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -45,7 +47,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <Header />
-            <main className="flex-grow">{children}</main>
+            <main className="flex-grow pb-20">{children}</main>
           </ThemeProvider>
           
           <Toaster position="bottom-right" />
